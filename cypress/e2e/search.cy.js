@@ -26,5 +26,21 @@ describe('Land Search Process', () => {
         cy.contains('Land Registration').should('be.visible').click();
         cy.get(".service_link[routerlink='/user/MoLPP/registration/search/search-application']").click();
 
+          //Initiate Search Application and fill in search data
+          cy.contains('Search Applications')
+          cy.get('.new_application_btn.mat-button.mat-button-base').should('contain', 'New Application').click()
+  
+          cy.contains('Search: New Application')
+          cy.get('#cdk-step-label-0-1').should('contain', 'Search details').click()
+  
+          cy.get('input[formcontrolname="parcel_number"]').type("NAIROBI/BLOCK153/126")
+          cy.get('#add_parcel').click()
+          cy.get('input[formcontrolname="parcel_number"]').type("NAIROBI/BLOCK153/131")
+          cy.get('#add_parcel').click()
+  
+          cy.get('textarea[formcontrolname="purpose_of_search"]').type("Verify Land owner")
+  
+          cy.get("div[class='row_section'] button[type='submit']").should('contain', 'Next').click()
+  
     });
 })
