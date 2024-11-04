@@ -19,4 +19,12 @@ describe('Land Search Process', () => {
 
         cy.get('.greetings').should('contain', 'Hi Monicah, welcome');
     });
+
+    it('navigate to search in Land Registration section', () => {
+
+        //Navigate to Land Registration Section
+        cy.contains('Land Registration').should('be.visible').click();
+        cy.get(".service_link[routerlink='/user/MoLPP/registration/search/search-application']").click();
+
+    });
 })
