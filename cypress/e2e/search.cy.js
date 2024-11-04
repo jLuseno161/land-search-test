@@ -42,5 +42,14 @@ describe('Land Search Process', () => {
   
           cy.get("div[class='row_section'] button[type='submit']").should('contain', 'Next').click()
   
+          //Attach documents
+          cy.readFile('cypress/fixtures/File Test.pdf').should('exist');
+  
+          cy.get('input[type="file"]').eq(0).attachFile('File Test.pdf');
+          cy.get('input[type="file"]').eq(1).attachFile('File Test2.pdf');
+  
+  
+          cy.xpath("(//button[@type='submit'])[3]").should('contain', 'Next').click()
+          
     });
 })
