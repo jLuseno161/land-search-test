@@ -20,7 +20,7 @@ describe('Land Search Process', () => {
         cy.get('.greetings').should('contain', 'Hi Monicah, welcome');
     });
 
-    it('navigate to search in Land Registration section', () => {
+    it('should navigate to Land Registration section and create new search application', () => {
 
         //Navigate to Land Registration Section
         cy.contains('Land Registration').should('be.visible').click();
@@ -62,7 +62,6 @@ describe('Land Search Process', () => {
         cy.intercept('POST', 'http://192.168.214.184/registrationservice/api/v1/search/search-application/create_search_application').as('createApplication')
         cy.wait('@createApplication')
 
-        // cy.get('.swal2-content').should('exist')
         cy.get('.swal2-content')
             .should('exist')
             .invoke('text')
