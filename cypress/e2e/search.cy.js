@@ -1,6 +1,6 @@
 describe('Land Search Process', () => {
     before(() => {
-        // Visit Ardhisasa Platform open login page
+        // Visit Ardhisasa Platform and navigate to login page
         cy.visit('/home')
         cy.contains('Ardhisasa')
         cy.xpath("//a[@routerlink='/account']").should('be.visible').click();
