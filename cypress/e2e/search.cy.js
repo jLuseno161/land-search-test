@@ -59,12 +59,12 @@ describe('Land Search Process', () => {
         cy.xpath("//button[@class='continue-button mat-button mat-button-base']").should('contain.text', 'Yes').click()
 
         //intercept post request
-        cy.intercept('POST','http://192.168.214.184/registrationservice/api/v1/search/search-application/create_search_application').as('createApplication')
+        cy.intercept('POST', 'http://192.168.214.184/registrationservice/api/v1/search/search-application/create_search_application').as('createApplication')
         cy.wait('@createApplication')
 
-        cy.get('.swal2-content').should('exist')
-
+        // cy.get('.swal2-content').should('exist')
         cy.get('.swal2-content')
+            .should('exist')
             .invoke('text')
             .then((text) => {
                 expect(text.trim()).to.include('Application successfully submitted!');
@@ -72,7 +72,12 @@ describe('Land Search Process', () => {
 
         cy.xpath("//button[normalize-space()='Close']").should('be.visible').click()
 
+        //Mock payment
         cy.url().should('include', '/search-application/Pending/')
+        cy.get('.view_btn.viewButton').first().click({ force: true });
+        cy.contains('button', 'Mock Payments').click();
 
+        // Check if application has moved to next step
+        cy.contains('Progress level: Search Application assigned to registrar')
     });
 })
