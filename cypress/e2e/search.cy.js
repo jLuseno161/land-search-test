@@ -36,8 +36,8 @@ describe('Land Search Process', () => {
 
         cy.get('input[formcontrolname="parcel_number"]').type("NAIROBI/BLOCK153/126")
         cy.get('#add_parcel').click()
-        // cy.get('input[formcontrolname="parcel_number"]').type("NAIROBI/BLOCK153/131")
-        // cy.get('#add_parcel').click()
+        cy.get('input[formcontrolname="parcel_number"]').type("NAIROBI/BLOCK153/131")
+        cy.get('#add_parcel').click()
 
         cy.get('textarea[formcontrolname="purpose_of_search"]').type("Verify Land owner")
 
@@ -58,12 +58,13 @@ describe('Land Search Process', () => {
             .and('contain', 'Are you sure you want to submit the request!')
         cy.xpath("//button[@class='continue-button mat-button mat-button-base']").should('contain.text', 'Yes').click()
 
-        // cy.xpath("//div[@role='dialog']")
-        //     .should('be.visible', { timeout: 4000 })
-        //     .invoke('text')
-        //     .should('include', 'Application successfully submitted!');
+        //intercept post request
+        cy.intercept('POST','http://192.168.214.184/registrationservice/api/v1/search/search-application/create_search_application').as('createApplication')
+        cy.wait('@createApplication')
 
-        cy.xpath("//div[@role='dialog']")
+        cy.get('.swal2-content').should('exist')
+
+        cy.get('.swal2-content')
             .invoke('text')
             .then((text) => {
                 expect(text.trim()).to.include('Application successfully submitted!');
